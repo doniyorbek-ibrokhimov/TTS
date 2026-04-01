@@ -48,17 +48,17 @@ def load_fsspec(
             filecache={"cache_storage": str(get_user_data_dir("tts_cache"))},
             mode="rb",
         ) as f:
-            return torch.load(f, map_location=map_location, **kwargs)
+            return torch.load(f, map_location=map_location, weights_only=False, **kwargs)
     else:
         with fsspec.open(path, "rb") as f:
-            return torch.load(f, map_location=map_location, **kwargs)
+            return torch.load(f, map_location=map_location, weights_only=False, **kwargs)
 
 
 def load_checkpoint(
     model, checkpoint_path, use_cuda=False, eval=False, cache=False
 ):  # pylint: disable=redefined-builtin
     try:
-        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), cache=cache)
+        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), cache=cache, weights_only=False)
     except ModuleNotFoundError:
         pickle_tts.Unpickler = RenamingUnpickler
         state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), pickle_module=pickle_tts, cache=cache)
