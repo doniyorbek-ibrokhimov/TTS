@@ -4,6 +4,7 @@ WadaSNR/
 .DS_Store
 .venv/
 *.wav
+outputs/
 ./__init__.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
